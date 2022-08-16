@@ -10,7 +10,7 @@ class ClientModel extends Model
     protected $table            = 'client';
     protected $primaryKey       = 'kd_client';
     protected $useAutoIncrement = false;
-    protected $insertID         = 0;
+    // protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
@@ -25,34 +25,21 @@ class ClientModel extends Model
 
     protected $validationRules      = [
         'kd_client' => 'required|is_unique[client.kd_client]',
-        // 
         'nama_client' => 'required',
         'pt_client' => 'required',
-        'logo_client' => 'required',
-        'telegram_client' => 'required',
-        'noted_client' => 'required',
     ];
-    protected $validationMessages   = [
-        'kd_client' => [
-            'required' => 'Silakan masukan kode',
-            'is_unique' => 'kode client sudah ada'
-        ],
-        'nama_client' => [
-            'required' => 'Silakan masukan nama',
-        ],
-        'pt_client' => [
-            'required' => 'Silakan masukan pt',
-        ],
-        'logo_client' => [
-            'required' => 'Silakan masukan logo',
-        ],
-        'telegram_client' => [
-            'required' => 'Silakan masukan client',
-        ],
-        'noted_client' => [
-            'required' => 'Silakan masukan noted',
-        ]
-    ];
+    // protected $validationMessages   = [
+    //     'kd_client' => [
+    //         'required' => 'Silakan masukan kode',
+    //         'is_unique' => 'kode client sudah ada'
+    //     ],
+    //     'nama_client' => [
+    //         'required' => 'Silakan masukan nama',
+    //     ],
+    //     'pt_client' => [
+    //         'required' => 'Silakan masukan pt',
+    //     ],
+    // ];
 
     // // Callbacks
     // protected $allowCallbacks = true;
