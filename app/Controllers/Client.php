@@ -29,23 +29,23 @@ class Client extends ResourceController
         if ($data) {
             return $this->respond($data, 200);
         } else {
-            return $this->failNotFound("data tidak ditemukan untuk id $id");
+            return $this->failNotFound("data tidak ditemukan untuk kode client $id");
         }
     }
 
     public function create()
     {
 
-        // $data = $this->request->getPost();
-        $data = [
-            'kd_client' => $this->request->getVar('kd_client'),
-            'nama_client' => $this->request->getVar('nama_client'),
-            'pt_client' => $this->request->getVar('pt_client'),
-            'logo_client' => $this->request->getVar('logo_client'),
-            'telegram_client' => $this->request->getVar('telegram_client'),
-            'noted_client' => $this->request->getVar('noted_client'),
-        ];
-        if (!$this->model->save($data,)) {
+        $data = $this->request->getPost();
+        // $data = [
+        //     'kd_client' => $this->request->getVar('kd_client'),
+        //     'nama_client' => $this->request->getVar('nama_client'),
+        //     'pt_client' => $this->request->getVar('pt_client'),
+        //     'logo_client' => $this->request->getVar('logo_client'),
+        //     'telegram_client' => $this->request->getVar('telegram_client'),
+        //     'noted_client' => $this->request->getVar('noted_client'),
+        // ];
+        if (!$this->model->save($data)) {
             return $this->fail($this->model->errors());
         }
         $response = [
@@ -65,7 +65,7 @@ class Client extends ResourceController
 
         $isExists = $this->model->where('kd_client', $id)->findAll();
         if (!$isExists) {
-            return $this->failNotFound("Data tidak ditemukan untuk id $id");
+            return $this->failNotFound("Data tidak ditemukan untuk kode client $id");
         }
 
         if (!$this->model->save($data)) {

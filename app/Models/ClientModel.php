@@ -9,22 +9,23 @@ class ClientModel extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'client';
     protected $primaryKey       = 'kd_client';
-    // protected $useAutoIncrement = false;
-    // protected $insertID         = 0;
-    // protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useAutoIncrement = false;
+    protected $insertID         = 0;
+    protected $returnType       = 'array';
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['kd_client', 'nama_client', 'pt_client', 'alamat_client', 'logo_client', 'telegram_client', 'noted_client'];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_client';
     protected $updatedField  = 'updated_client';
     protected $deletedField  = 'deleted_client';
 
     protected $validationRules      = [
-        'kd_client' => 'required',
+        'kd_client' => 'required|is_unique[client.kd_client]',
+        // 
         'nama_client' => 'required',
         'pt_client' => 'required',
         'logo_client' => 'required',
@@ -33,22 +34,23 @@ class ClientModel extends Model
     ];
     protected $validationMessages   = [
         'kd_client' => [
-            'required' => 'Silakan masukan nama'
+            'required' => 'Silakan masukan kode',
+            'is_unique' => 'kode client sudah ada'
         ],
         'nama_client' => [
-            'required' => 'Silakan masukan email',
+            'required' => 'Silakan masukan nama',
         ],
         'pt_client' => [
-            'required' => 'Silakan masukan email',
+            'required' => 'Silakan masukan pt',
         ],
         'logo_client' => [
-            'required' => 'Silakan masukan email',
+            'required' => 'Silakan masukan logo',
         ],
         'telegram_client' => [
-            'required' => 'Silakan masukan email',
+            'required' => 'Silakan masukan client',
         ],
         'noted_client' => [
-            'required' => 'Silakan masukan email',
+            'required' => 'Silakan masukan noted',
         ]
     ];
 
