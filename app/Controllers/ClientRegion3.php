@@ -51,7 +51,7 @@ class ClientRegion3 extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->findAll();
+        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->where('kd_client_region_3', $id)->findAll();
         if ($data) {
 
             foreach ($data as $row) {
