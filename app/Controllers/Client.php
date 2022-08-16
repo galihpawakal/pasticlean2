@@ -20,10 +20,23 @@ class Client extends BaseController
     {
         $data = $this->model->findAll();
         if ($data) {
+            foreach ($data as $row) {
+                $result[] = [
+                    'kd_client' => $row['kd_client'],
+                    'nama_client' => $row['nama_client'],
+                    'pt_client' => $row['pt_client'],
+                    'alamat_client' => $row['alamat_client'],
+                    'logo_client' => $row['logo_client'],
+                    'telegram_client' => $row['telegram_client'],
+                    'noted_client' => $row['noted_client'],
+                    'created_client' => $row['created_client'],
+                    'updated_client' => $row['updated_client'],
+                ];
+            }
             return $this->respond([
                 'code' => 201,
                 'status' => 'success',
-                'data' => $data
+                'data' => $result
             ], 200);
         } else {
             return $this->respond([
@@ -37,13 +50,31 @@ class Client extends BaseController
     {
         $data = $this->model->where('kd_client', $id)->findAll();
         if ($data) {
+            foreach ($data as $row) {
+                $result = [
+                    'kd_client' => $row['kd_client'],
+                    'nama_client' => $row['nama_client'],
+                    'pt_client' => $row['pt_client'],
+                    'alamat_client' => $row['alamat_client'],
+                    'logo_client' => $row['logo_client'],
+                    'telegram_client' => $row['telegram_client'],
+                    'noted_client' => $row['noted_client'],
+                    'created_client' => $row['created_client'],
+                    'updated_client' => $row['updated_client'],
+                ];
+            }
             return $this->respond([
                 'code' => 201,
                 'status' => 'success',
-                'data' => $data
+                'data' => $result
             ]);
         } else {
-            return $this->failNotFound("data tidak ditemukan untuk kode client $id");
+            $response = [
+                'code' => 401,
+                'status' => 'error',
+                'data' => 'data not found'
+            ];
+            return $this->respond($response);
         }
     }
 
@@ -71,7 +102,7 @@ class Client extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->where('kd_client', $id)->findAll();
+        $isExists = $this->model->where('kd_client', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -81,11 +112,22 @@ class Client extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $result = [
+            'kd_client' => $isExists[0]['kd_client'],
+            'nama_client' => $isExists[0]['nama_client'],
+            'pt_client' => $isExists[0]['pt_client'],
+            'alamat_client' => $isExists[0]['alamat_client'],
+            'logo_client' => $isExists[0]['logo_client'],
+            'telegram_client' => $isExists[0]['telegram_client'],
+            'noted_client' => $isExists[0]['noted_client'],
+            'created_client' => $isExists[0]['created_client'],
+            'updated_client' => $isExists[0]['updated_client'],
+        ];
         if ($update) {
             $response = [
                 'code' => 201,
                 'status' => 'success',
-                'data' => $data
+                'data' => $result
             ];
             return $this->respond($response);
         } else {
