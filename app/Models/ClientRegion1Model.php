@@ -33,6 +33,7 @@ class ClientRegion1Model extends Model
     // Validation
     protected $validationRules      = [
         'kd_client_region_1' => 'required|is_unique[client_region_1.kd_client_region_1]',
+        'kd_client' => 'required',
         'nama_client_region_1' => 'required',
     ];
     protected $validationMessages   = [];

@@ -18,11 +18,20 @@ class Client extends BaseController
 
     public function index()
     {
-        return $this->respond([
-            'code' => 201,
-            'status' => 'success',
-            'data' => $this->model->findAll()
-        ], 200);
+        $data = $this->model->findAll();
+        if ($data) {
+            return $this->respond([
+                'code' => 201,
+                'status' => 'success',
+                'data' => $data
+            ], 200);
+        } else {
+            return $this->respond([
+                'code' => 201,
+                'status' => 'success',
+                'data' => 'data not found'
+            ], 200);
+        }
     }
     public function show($id = null)
     {
@@ -40,15 +49,20 @@ class Client extends BaseController
 
     public function create()
     {
-
         $data = $this->request->getPost();
-        if (!$this->model->save($data)) {
-            return $this->fail($this->model->errors());
-        } else {
+        $save = $this->model->save($data);
+        if ($save) {
             $response = [
                 'code' => 201,
                 'status' => 'success',
                 'data' => $data
+            ];
+            return $this->respond($response);
+        } else {
+            $response = [
+                'code' => 201,
+                'status' => 'error',
+                'message' => $this->model->errors()
             ];
             return $this->respond($response);
         }
