@@ -3,17 +3,17 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ClientModel;
+use App\Models\ClientRegion1Model;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 
-class Client extends BaseController
+class ClientRegion1 extends BaseController
 {
     use ResponseTrait;
 
     function __construct()
     {
-        $this->model = new ClientModel();
+        $this->model = new ClientRegion1Model();
     }
 
     public function index()
@@ -26,7 +26,7 @@ class Client extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->where('kd_client', $id)->findAll();
+        $data = $this->model->where('kd_client_region_1', $id)->findAll();
         if ($data) {
             return $this->respond([
                 'code' => 201,
@@ -34,7 +34,12 @@ class Client extends BaseController
                 'data' => $data
             ]);
         } else {
-            return $this->failNotFound("data tidak ditemukan untuk kode client $id");
+            $response = [
+                'code' => 401,
+                'status' => 'error',
+                'data' => 'data not found'
+            ];
+            return $this->respond($response);
         }
     }
 
@@ -57,7 +62,7 @@ class Client extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->where('kd_client', $id)->findAll();
+        $isExists = $this->model->where('kd_client_region_1', $id)->findAll();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -86,7 +91,7 @@ class Client extends BaseController
 
     public function delete($id = null)
     {
-        $data = $this->model->where('kd_client', $id)->findAll();
+        $data = $this->model->where('kd_client_region_1', $id)->findAll();
         if ($data) {
             $this->model->delete($id);
             $response = [

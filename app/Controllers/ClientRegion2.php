@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-class ClientRegion1Model extends BaseController
+class ClientRegion2 extends BaseController
 {
     public function index()
     {
