@@ -4,75 +4,75 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ClientModel;
-use App\Models\ClientRegion1Model;
 use App\Models\ClientRegion2Model;
+use App\Models\ClientRegion3Model;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 
-class ClientRegion2 extends BaseController
+class ClientRegion3 extends BaseController
 {
     use ResponseTrait;
 
     function __construct()
     {
-        $this->model = new ClientRegion2Model();
-        $this->modelClientRegion1 = new ClientRegion1Model();
+        $this->model = new ClientRegion3Model();
+        $this->modelClientRegion2 = new ClientRegion2Model();
         $this->modelClient = new ClientModel();
     }
 
     public function index()
     {
-        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->findAll();
+        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->findAll();
         if ($data) {
-            foreach ($data as $key) {
+            foreach ($data as $row) {
                 $result[] = [
-                    'kd_client_region_2' => $key['kd_client_region_2'],
-                    // 'nama_client' => $key['nama_client'],
-                    'nama_client_region_1' => $key['nama_client_region_1'],
-                    'nama_client_region_2' => $key['nama_client_region_2'],
-                    'telegram_client_region_2' => $key['telegram_client_region_2'],
-                    'noted_client_region_2' => $key['noted_client_region_2'],
-                    'created_client_region_2' => $key['created_client_region_2'],
-                    'updated_client_region_2' => $key['updated_client_region_2'],
+                    'kd_client_region_3' => $row['kd_client_region_3'],
+                    // 'nama_client' => $row['nama_client'],
+                    'nama_client_region_2' => $row['nama_client_region_2'],
+                    'nama_client_region_3' => $row['nama_client_region_3'],
+                    'telegram_client_region_3' => $row['telegram_client_region_3'],
+                    'noted_client_region_3' => $row['noted_client_region_3'],
+                    'created_client_region_3' => $row['created_client_region_3'],
+                    'updated_client_region_3' => $row['updated_client_region_3'],
                 ];
             }
             return $this->respond([
                 'code' => 202,
                 'status' => 'success',
                 'data' => $result
-            ], 200);
+            ], 300);
         } else {
             return $this->respond([
                 'code' => 202,
                 'status' => 'error',
                 'data' => 'data not found'
-            ], 200);
+            ], 300);
         }
     }
     public function show($id = null)
     {
-        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->findAll();
+        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->findAll();
         if ($data) {
 
-            foreach ($data as $key) {
-                $result[] = [
-                    'kd_client_region_2' => $key['kd_client_region_2'],
-                    'nama_client_region_1' => $key['nama_client_region_1'],
-                    'nama_client_region_2' => $key['nama_client_region_2'],
-                    'telegram_client_region_2' => $key['telegram_client_region_2'],
-                    'noted_client_region_2' => $key['noted_client_region_2'],
-                    'created_client_region_2' => $key['created_client_region_2'],
-                    'updated_client_region_2' => $key['updated_client_region_2'],
+            foreach ($data as $row) {
+                $result = [
+                    'kd_client_region_3' => $row['kd_client_region_3'],
+                    'nama_client_region_2' => $row['nama_client_region_2'],
+                    'nama_client_region_3' => $row['nama_client_region_3'],
+                    'telegram_client_region_3' => $row['telegram_client_region_3'],
+                    'noted_client_region_3' => $row['noted_client_region_3'],
+                    'created_client_region_3' => $row['created_client_region_3'],
+                    'updated_client_region_3' => $row['updated_client_region_3'],
                 ];
             }
             return $this->respond([
                 'code' => 202,
                 'status' => 'success',
                 'data' => $result
-            ], 200);
+            ], 300);
         } else {
             $response = [
-                'code' => 402,
+                'code' => 401,
                 'status' => 'error',
                 'data' => 'data not found'
             ];
@@ -82,11 +82,11 @@ class ClientRegion2 extends BaseController
 
     public function create()
     {
-        $kd_client_region_1 = $this->request->getVar('kd_client_region_1');
-        $isExists = $this->modelClientRegion1->where('kd_client_region_1', $kd_client_region_1)->findAll();
+        $kd_client_region_2 = $this->request->getVar('kd_client_region_2');
+        $isExists = $this->modelClientRegion2->where('kd_client_region_2', $kd_client_region_2)->findAll();
         if (!$isExists) {
             $response = [
-                'code' => 402,
+                'code' => 401,
                 'status' => 'error',
                 'data' => 'data not found'
             ];
@@ -115,10 +115,10 @@ class ClientRegion2 extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->find();
+        $isExists = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->find();
         if (!$isExists) {
             $response = [
-                'code' => 402,
+                'code' => 401,
                 'status' => 'error',
                 'data' => 'data not found'
             ];
@@ -126,13 +126,13 @@ class ClientRegion2 extends BaseController
         }
         $update = $this->model->update($id, $data);
         $result = [
-            'kd_client_region_2' => $isExists[0]['kd_client_region_2'],
-            'nama_client_region_1' => $isExists[0]['nama_client_region_1'],
+            'kd_client_region_3' => $isExists[0]['kd_client_region_3'],
             'nama_client_region_2' => $isExists[0]['nama_client_region_2'],
-            'telegram_client_region_2' => $isExists[0]['telegram_client_region_2'],
-            'noted_client_region_2' => $isExists[0]['noted_client_region_2'],
-            'created_client_region_2' => $isExists[0]['created_client_region_2'],
-            'updated_client_region_2' => $isExists[0]['updated_client_region_2'],
+            'nama_client_region_3' => $isExists[0]['nama_client_region_3'],
+            'telegram_client_region_3' => $isExists[0]['telegram_client_region_3'],
+            'noted_client_region_3' => $isExists[0]['noted_client_region_3'],
+            'created_client_region_3' => $isExists[0]['created_client_region_3'],
+            'updated_client_region_3' => $isExists[0]['updated_client_region_3'],
         ];
         if ($update) {
             $response = [
@@ -143,7 +143,7 @@ class ClientRegion2 extends BaseController
             return $this->respond($response);
         } else {
             $response = [
-                'code' => 402,
+                'code' => 401,
                 'status' => 'error',
                 'data' => $this->model->errors()
             ];
@@ -153,7 +153,7 @@ class ClientRegion2 extends BaseController
 
     public function delete($id = null)
     {
-        $data = $this->model->where('kd_client_region_2', $id)->findAll();
+        $data = $this->model->where('kd_client_region_3', $id)->findAll();
         if ($data) {
             $this->model->delete($id);
             $response = [
@@ -163,7 +163,7 @@ class ClientRegion2 extends BaseController
             return $this->respondDeleted($response);
         } else {
             $response = [
-                'code' => 402,
+                'code' => 401,
                 'status' => 'error',
                 'data' => 'data not found'
             ];
