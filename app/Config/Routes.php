@@ -47,7 +47,7 @@ $routes->resource('pengelolaregion3');
 $routes->resource('atmkategori');
 $routes->resource('atmsubkategori');
 $routes->resource('atmring');
-$routes->resource('atmkunjuungan');
+$routes->resource('atmkunjungan');
 $routes->resource('atmlokasi');
 $routes->resource('atmtid');
 
