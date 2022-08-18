@@ -130,6 +130,7 @@ class ClientRegion2 extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->find();
         $result = [
             'kd_client_region_2' => $isExists[0]['kd_client_region_2'],
             'nama_client_region_1' => $isExists[0]['nama_client_region_1'],
