@@ -4,35 +4,30 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AtmKategoriModel extends Model
+class AtmTidModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'atm_kategori';
-    protected $primaryKey       = 'id_atm_kategori';
+    protected $table            = 'atm_tid';
+    protected $primaryKey       = 'id_atm_tid';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'nama_atm_kategori',
-        'noted_atm_kategori',
-        'created_atm_kategori',
-        'updated_atm_kategori',
-        'deleted_atm_kategori',
+        'id_atm_lokasi',
+        'noted_atm_tid',
     ];
 
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_atm_kategori';
-    protected $updatedField  = 'updated_atm_kategori';
-    protected $deletedField  = 'deleted_atm_kategori';
+    protected $createdField  = 'created_atm_tid';
+    protected $updatedField  = 'updated_atm_tid';
+    protected $deletedField  = 'deleted_atm_tid';
 
     // Validation
-    protected $validationRules      = [
-        'nama_atm_kategori' => 'required',
-    ];
+    protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
