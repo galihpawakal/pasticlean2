@@ -107,6 +107,7 @@ class AtmRing extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->where('id_atm_ring', $id)->find();
         $result = [
             'id_atm_ring' => $isExists[0]['id_atm_ring'],
             'nama_atm_ring' => $isExists[0]['nama_atm_ring'],

@@ -105,6 +105,7 @@ class AtmKategori extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->where('id_atm_kategori', $id)->find();
         $result = [
             'id_atm_kategori' => $isExists[0]['id_atm_kategori'],
             'nama_atm_kategori' => $isExists[0]['nama_atm_kategori'],

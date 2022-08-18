@@ -22,12 +22,14 @@ class ClientRegion2 extends BaseController
 
     public function index()
     {
-        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->findAll();
+        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')
+            ->findAll();
         if ($data) {
             foreach ($data as $key) {
                 $result[] = [
                     'kd_client_region_2' => $key['kd_client_region_2'],
-                    // 'nama_client' => $key['nama_client'],
+                    'nama_client' => $key['nama_client'],
                     'nama_client_region_1' => $key['nama_client_region_1'],
                     'nama_client_region_2' => $key['nama_client_region_2'],
                     'telegram_client_region_2' => $key['telegram_client_region_2'],
@@ -51,12 +53,15 @@ class ClientRegion2 extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')->where('kd_client_region_2', $id)->findAll();
+        $data = $this->model->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')
+            ->where('kd_client_region_2', $id)->findAll();
         if ($data) {
 
             foreach ($data as $key) {
                 $result[] = [
                     'kd_client_region_2' => $key['kd_client_region_2'],
+                    'nama_client' => $key['nama_client'],
                     'nama_client_region_1' => $key['nama_client_region_1'],
                     'nama_client_region_2' => $key['nama_client_region_2'],
                     'telegram_client_region_2' => $key['telegram_client_region_2'],

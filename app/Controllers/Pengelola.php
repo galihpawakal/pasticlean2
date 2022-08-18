@@ -112,6 +112,7 @@ class Pengelola extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->where('kd_pengelola', $id)->find();
         $result = [
             'kd_pengelola' => $isExists[0]['kd_pengelola'],
             'nama_pengelola' => $isExists[0]['nama_pengelola'],

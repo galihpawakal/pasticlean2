@@ -112,7 +112,7 @@ class ClientRegion1 extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('client', 'client.kd_client = client_region_1.kd_client')->find();
+        $isExists = $this->model->join('client', 'client.kd_client = client_region_1.kd_client')->where('kd_client_region_1', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -122,6 +122,7 @@ class ClientRegion1 extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->join('client', 'client.kd_client = client_region_1.kd_client')->where('kd_client_region_1', $id)->find();
         $result = [
             'kd_client_region_1' => $isExists[0]['kd_client_region_1'],
             'nama_client' => $isExists[0]['nama_client'],

@@ -105,6 +105,7 @@ class AtmSubkategori extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->where('id_atm_subkategori', $id)->find();
         $result = [
             'id_atm_subkategori' => $isExists[0]['id_atm_subkategori'],
             'nama_atm_subkategori' => $isExists[0]['nama_atm_subkategori'],

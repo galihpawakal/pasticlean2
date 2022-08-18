@@ -17,17 +17,22 @@ class ClientRegion3 extends BaseController
     {
         $this->model = new ClientRegion3Model();
         $this->modelClientRegion2 = new ClientRegion2Model();
+        $this->modelClientRegion1 = new ClientRegion1();
         $this->modelClient = new ClientModel();
     }
 
     public function index()
     {
-        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->findAll();
+        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')
+            ->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')
+            ->findAll();
         if ($data) {
             foreach ($data as $row) {
                 $result[] = [
                     'kd_client_region_3' => $row['kd_client_region_3'],
-                    // 'nama_client' => $row['nama_client'],
+                    'nama_client' => $row['nama_client'],
+                    'nama_client_region_1' => $row['nama_client_region_1'],
                     'nama_client_region_2' => $row['nama_client_region_2'],
                     'nama_client_region_3' => $row['nama_client_region_3'],
                     'telegram_client_region_3' => $row['telegram_client_region_3'],
@@ -51,12 +56,17 @@ class ClientRegion3 extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->where('kd_client_region_3', $id)->findAll();
+        $data = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')
+            ->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')
+            ->where('kd_client_region_3', $id)->findAll();
         if ($data) {
 
             foreach ($data as $row) {
                 $result = [
                     'kd_client_region_3' => $row['kd_client_region_3'],
+                    'nama_client' => $row['nama_client'],
+                    'nama_client_region_1' => $row['nama_client_region_1'],
                     'nama_client_region_2' => $row['nama_client_region_2'],
                     'nama_client_region_3' => $row['nama_client_region_3'],
                     'telegram_client_region_3' => $row['telegram_client_region_3'],
@@ -115,7 +125,9 @@ class ClientRegion3 extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')->find();
+        $isExists = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')
+            ->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')->where('kd_client_region_3', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -125,8 +137,13 @@ class ClientRegion3 extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->join('client_region_2', 'client_region_2.kd_client_region_2 = client_region_3.kd_client_region_2')
+            ->join('client_region_1', 'client_region_1.kd_client_region_1 = client_region_2.kd_client_region_1')
+            ->join('client', 'client.kd_client = client_region_1.kd_client')->where('kd_client_region_3', $id)->find();
         $result = [
             'kd_client_region_3' => $isExists[0]['kd_client_region_3'],
+            'nama_client' => $isExists[0]['nama_client'],
+            'nama_client_region_1' => $isExists[0]['nama_client_region_1'],
             'nama_client_region_2' => $isExists[0]['nama_client_region_2'],
             'nama_client_region_3' => $isExists[0]['nama_client_region_3'],
             'telegram_client_region_3' => $isExists[0]['telegram_client_region_3'],

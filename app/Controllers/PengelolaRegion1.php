@@ -112,7 +112,7 @@ class PengelolaRegion1 extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')->find();
+        $isExists = $this->model->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')->where('kd_pengelola_region_1', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -122,6 +122,7 @@ class PengelolaRegion1 extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')->where('kd_pengelola_region_1', $id)->find();
         $result = [
             'kd_pengelola_region_1' => $isExists[0]['kd_pengelola_region_1'],
             'nama_pengelola' => $isExists[0]['nama_pengelola'],

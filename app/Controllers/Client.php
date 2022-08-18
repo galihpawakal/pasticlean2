@@ -112,6 +112,7 @@ class Client extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->where('kd_client', $id)->find();
         $result = [
             'kd_client' => $isExists[0]['kd_client'],
             'nama_client' => $isExists[0]['nama_client'],

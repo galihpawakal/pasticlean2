@@ -51,7 +51,7 @@ class AtmKunjungan extends ResourceController
         if ($data) {
 
             foreach ($data as $key) {
-                $result = [
+                $result[] = [
                     'id_atm_kunjungan' => $key['id_atm_kunjungan'],
                     'nama_atm_ring' => $key['nama_atm_ring'],
                     'nama_atm_kunjungan' => $key['nama_atm_kunjungan'],
@@ -110,7 +110,7 @@ class AtmKunjungan extends ResourceController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('atm_ring', 'atm_ring.id_atm_ring = atm_kunjungan.id_atm_ring')->find();
+        $isExists = $this->model->join('atm_ring', 'atm_ring.id_atm_ring = atm_kunjungan.id_atm_ring')->where('id_atm_kunjungan', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -120,7 +120,8 @@ class AtmKunjungan extends ResourceController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
-        $result = [
+        $isExists = $this->model->join('atm_ring', 'atm_ring.id_atm_ring = atm_kunjungan.id_atm_ring')->where('id_atm_kunjungan', $id)->find();
+        $result[] = [
             'id_atm_kunjungan' => $isExists[0]['id_atm_kunjungan'],
             'nama_atm_ring' => $isExists[0]['nama_atm_ring'],
             'nama_atm_kunjungan' => $isExists[0]['nama_atm_kunjungan'],

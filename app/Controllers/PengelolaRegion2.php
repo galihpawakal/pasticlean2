@@ -22,12 +22,14 @@ class PengelolaRegion2 extends BaseController
 
     public function index()
     {
-        $data = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')->findAll();
+        $data = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')
+            ->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')
+            ->findAll();
         if ($data) {
             foreach ($data as $key) {
                 $result[] = [
                     'kd_pengelola_region_2' => $key['kd_pengelola_region_2'],
-                    // 'nama_pengelola' => $key['nama_pengelola'],
+                    'nama_pengelola' => $key['nama_pengelola'],
                     'nama_pengelola_region_1' => $key['nama_pengelola_region_1'],
                     'nama_pengelola_region_2' => $key['nama_pengelola_region_2'],
                     'telegram_pengelola_region_2' => $key['telegram_pengelola_region_2'],
@@ -51,12 +53,15 @@ class PengelolaRegion2 extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')->where('kd_pengelola_region_2', $id)->findAll();
+        $data = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')
+            ->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')
+            ->where('kd_pengelola_region_2', $id)->findAll();
         if ($data) {
 
             foreach ($data as $key) {
                 $result[] = [
                     'kd_pengelola_region_2' => $key['kd_pengelola_region_2'],
+                    'nama_pengelola' => $key['nama_pengelola'],
                     'nama_pengelola_region_1' => $key['nama_pengelola_region_1'],
                     'nama_pengelola_region_2' => $key['nama_pengelola_region_2'],
                     'telegram_pengelola_region_2' => $key['telegram_pengelola_region_2'],
@@ -115,7 +120,9 @@ class PengelolaRegion2 extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')->find();
+        $isExists = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')
+            ->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')
+            ->where('kd_pengelola_region_2', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 402,
@@ -125,8 +132,12 @@ class PengelolaRegion2 extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
+        $isExists = $this->model->join('pengelola_region_1', 'pengelola_region_1.kd_pengelola_region_1 = pengelola_region_2.kd_pengelola_region_1')
+            ->join('pengelola', 'pengelola.kd_pengelola = pengelola_region_1.kd_pengelola')
+            ->where('kd_pengelola_region_2', $id)->find();
         $result = [
             'kd_pengelola_region_2' => $isExists[0]['kd_pengelola_region_2'],
+            'nama_pengelola' => $isExists[0]['nama_pengelola'],
             'nama_pengelola_region_1' => $isExists[0]['nama_pengelola_region_1'],
             'nama_pengelola_region_2' => $isExists[0]['nama_pengelola_region_2'],
             'telegram_pengelola_region_2' => $isExists[0]['telegram_pengelola_region_2'],
