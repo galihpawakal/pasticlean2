@@ -12,6 +12,7 @@ class AtmLokasi extends Migration
             'id_atm_lokasi' => [
                 'type' => 'int',
                 'auto_increment' => true,
+                'unsigned' => TRUE,
                 'constraint' => '11'
             ],
             'kd_client_region_3' => [

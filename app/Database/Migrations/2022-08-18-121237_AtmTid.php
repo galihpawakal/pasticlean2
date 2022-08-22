@@ -10,13 +10,12 @@ class AtmTid extends Migration
     {
         $this->forge->addField([
             'id_atm_tid' => [
-                'type' => 'int',
-                'auto_increment' => true,
-                'constraint' => '11',
-                'unsigned' => TRUE,
+                'type' => 'varchar',
+                'constraint' => '50',
             ],
             'id_atm_lokasi' => [
                 'type' => 'int',
+                'unsigned' => TRUE,
                 'constraint' => '11',
             ],
             'noted_atm_tid' => [
