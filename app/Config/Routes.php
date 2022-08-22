@@ -25,7 +25,7 @@ $routes->set404Override();
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
 // Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -50,6 +50,15 @@ $routes->resource('atmring');
 $routes->resource('atmkunjungan');
 $routes->resource('atmlokasi');
 $routes->resource('atmtid');
+$routes->resource('checklist');
+$routes->resource('snapshoot');
+$routes->resource('kunjungan');
+$routes->resource('kunjunganchecklist');
+$routes->resource('kunjungansnapshoot');
+$routes->resource('kunjunganattach');
+$routes->resource('atmproblem');
+$routes->resource('atmaudit');
+
 
 /*
  * --------------------------------------------------------------------

@@ -75,8 +75,8 @@ class AtmTid extends BaseController
 
     public function create()
     {
-        $id_atm_lokasi = $this->request->getVar('id_atm_lokasi');
-        $isExists = $this->modelAtmLokasi->where('id_atm_lokasi', $id_atm_lokasi)->findAll();
+        $atm_lokasi = $this->request->getVar('id_atm_lokasi');
+        $isExists = $this->modelAtmLokasi->where('id_atm_lokasi', $atm_lokasi)->findAll();
         if (!$isExists) {
             $response = [
                 'code' => 401,

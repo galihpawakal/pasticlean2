@@ -9,12 +9,14 @@ class AtmTidModel extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'atm_tid';
     protected $primaryKey       = 'id_atm_tid';
-    protected $useAutoIncrement = true;
-    protected $insertID         = 0;
+    protected $Foreignkey       = 'id_atm_lokasi';
+    // protected $useAutoIncrement = true;
+    // protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'id_atm_tid',
         'id_atm_lokasi',
         'noted_atm_tid',
     ];
@@ -27,7 +29,10 @@ class AtmTidModel extends Model
     protected $deletedField  = 'deleted_atm_tid';
 
     // Validation
-    protected $validationRules      = [];
+    protected $validationRules      = [
+        'id_atm_tid' => 'required|is_unique[atm_tid.id_atm_tid]',
+        'id_atm_lokasi' => 'required',
+    ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;

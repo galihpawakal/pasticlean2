@@ -7,24 +7,33 @@ use CodeIgniter\Model;
 class ChecklistModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'checklists';
-    protected $primaryKey       = 'id';
+    protected $table            = 'checklist';
+    protected $primaryKey       = 'id_checklist';
+    protected $ForeignKey       = 'id_atm_kunjungan';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'id_atm_kunjungan',
+        'nama_checklist',
+        'status_foto_checklist',
+        'noted_checklist',
+    ];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'created_checklist';
+    protected $updatedField  = 'updated_checklist';
+    protected $deletedField  = 'deleted_checklist';
 
     // Validation
-    protected $validationRules      = [];
+    protected $validationRules      = [
+        'id_atm_kunjungan' => 'required',
+        'nama_checklist' => 'required',
+    ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;

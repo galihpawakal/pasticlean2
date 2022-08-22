@@ -30,7 +30,7 @@ class PengelolaRegion3 extends BaseController
                 $result[] = [
                     'kd_pengelola_region_3' => $row['kd_pengelola_region_3'],
                     'nama_pengelola' => $row['nama_pengelola'],
-                    'nama_pengelola_region_2' => $row['nama_pengelola_region_1'],
+                    'nama_pengelola_region_1' => $row['nama_pengelola_region_1'],
                     'nama_pengelola_region_2' => $row['nama_pengelola_region_2'],
                     'nama_pengelola_region_3' => $row['nama_pengelola_region_3'],
                     'telegram_pengelola_region_3' => $row['telegram_pengelola_region_3'],
@@ -64,7 +64,7 @@ class PengelolaRegion3 extends BaseController
                 $result = [
                     'kd_pengelola_region_3' => $row['kd_pengelola_region_3'],
                     'nama_pengelola' => $row['nama_pengelola'],
-                    'nama_pengelola_region_2' => $row['nama_pengelola_region_1'],
+                    'nama_pengelola_region_1' => $row['nama_pengelola_region_1'],
                     'nama_pengelola_region_2' => $row['nama_pengelola_region_2'],
                     'nama_pengelola_region_3' => $row['nama_pengelola_region_3'],
                     'telegram_pengelola_region_3' => $row['telegram_pengelola_region_3'],
