@@ -3,32 +3,41 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\AtmKunjunganModel;
 use App\Models\AtmLokasiModel;
-use App\Models\AtmTidModel;
+use App\Models\KunjunganAttachModel;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 
-class AtmTid extends BaseController
+class KunjunganAttach extends BaseController
 {
     use ResponseTrait;
 
     function __construct()
     {
-        $this->model = new AtmTidModel();
+        $this->model = new KunjunganAttachModel();
+        $this->modelAtmKunjungan = new AtmKunjunganModel();
         $this->modelAtmLokasi = new AtmLokasiModel();
     }
 
     public function index()
     {
-        $data = $this->model->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = atm_tid.id_atm_lokasi')->findAll();
+        $data = $this->model->join('atm_kunjungan', 'atm_kunjungan.id_atm_kunjungan = kunjungan_attach.id_atm_kunjungan')
+            ->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = kunjungan_attach.id_atm_lokasi')
+
+            ->findAll();
         if ($data) {
             foreach ($data as $key) {
                 $result[] = [
-                    'id_atm_tid' => $key['id_atm_tid'],
+                    'id_kunjungan_attach' => $key['id_kunjungan_attach'],
+                    'nama_atm_kunjungan' => $key['nama_atm_kunjungan'],
                     'nama_atm_lokasi' => $key['nama_atm_lokasi'],
-                    'noted_atm_tid' => $key['noted_atm_tid'],
-                    'created_atm_tid' => $key['created_atm_tid'],
-                    'updated_atm_tid' => $key['updated_atm_tid'],
+                    'petugas_kunjungan_attach' => $key['petugas_kunjungan_attach'],
+                    'tgl_kunjungan_attach' => $key['tgl_kunjungan_attach'],
+                    'status_kunjungan_attach' => $key['status_kunjungan_attach'],
+                    'noted_kunjungan_attach' => $key['noted_kunjungan_attach'],
+                    'created_kunjungan_attach' => $key['created_kunjungan_attach'],
+                    'updated_kunjungan_attach' => $key['updated_kunjungan_attach'],
                 ];
             }
             return $this->respond([
@@ -46,16 +55,22 @@ class AtmTid extends BaseController
     }
     public function show($id = null)
     {
-        $data = $this->model->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = atm_tid.id_atm_lokasi')->where('id_atm_tid', $id)->findAll();
+        $data = $this->model->join('atm_kunjungan', 'atm_kunjungan.id_atm_kunjungan = kunjungan_attach.id_atm_kunjungan')
+            ->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = kunjungan_attach.id_atm_lokasi')
+            ->where('id_kunjungan_attach', $id)->findAll();
         if ($data) {
 
             foreach ($data as $key) {
                 $result = [
-                    'id_atm_tid' => $key['id_atm_tid'],
+                    'id_kunjungan_attach' => $key['id_kunjungan_attach'],
+                    'nama_atm_kunjungan' => $key['nama_atm_kunjungan'],
                     'nama_atm_lokasi' => $key['nama_atm_lokasi'],
-                    'noted_atm_tid' => $key['noted_atm_tid'],
-                    'created_atm_tid' => $key['created_atm_tid'],
-                    'updated_atm_tid' => $key['updated_atm_tid'],
+                    'petugas_kunjungan_attach' => $key['petugas_kunjungan_attach'],
+                    'tgl_kunjungan_attach' => $key['tgl_kunjungan_attach'],
+                    'status_kunjungan_attach' => $key['status_kunjungan_attach'],
+                    'noted_kunjungan_attach' => $key['noted_kunjungan_attach'],
+                    'created_kunjungan_attach' => $key['created_kunjungan_attach'],
+                    'updated_kunjungan_attach' => $key['updated_kunjungan_attach'],
                 ];
             }
             return $this->respond([
@@ -74,17 +89,30 @@ class AtmTid extends BaseController
     }
 
     public function create()
-    {
+    {        //atm lokasi
+        $id_atm_kunjungan = $this->request->getVar('id_atm_kunjungan');
+        $isExists = $this->modelAtmKunjungan->where('id_atm_kunjungan', $id_atm_kunjungan)->findAll();
+        if (!$isExists) {
+            $response = [
+                'code' => 401,
+                'status' => 'error',
+                'data' => 'data not found lokasi'
+            ];
+            return $this->respond($response);
+        }
+        // atm kunjungan_attach
         $id_atm_lokasi = $this->request->getVar('id_atm_lokasi');
         $isExists = $this->modelAtmLokasi->where('id_atm_lokasi', $id_atm_lokasi)->findAll();
         if (!$isExists) {
             $response = [
                 'code' => 401,
                 'status' => 'error',
-                'data' => 'data not found'
+                'data' => 'data not found atm_lokasi atm_kunjungan'
             ];
             return $this->respond($response);
         }
+
+
         $data = $this->request->getPost();
         $save = $this->model->save($data);
 
@@ -108,7 +136,9 @@ class AtmTid extends BaseController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $isExists = $this->model->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = atm_tid.id_atm_lokasi')->where('id_atm_tid', $id)->find();
+        $isExists = $this->model->join('atm_kunjungan', 'atm_kunjungan.id_atm_kunjungan = kunjungan_attach.id_atm_kunjungan')
+            ->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = kunjungan_attach.id_atm_lokasi')
+            ->where('id_kunjungan_attach', $id)->find();
         if (!$isExists) {
             $response = [
                 'code' => 401,
@@ -118,13 +148,19 @@ class AtmTid extends BaseController
             return $this->respond($response);
         }
         $update = $this->model->update($id, $data);
-        $isExists = $this->model->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = atm_tid.id_atm_lokasi')->where('id_atm_tid', $id)->find();
+        $isExists = $this->model->join('atm_kunjungan', 'atm_kunjungan.id_atm_kunjungan = kunjungan_attach.id_atm_kunjungan')
+            ->join('atm_lokasi', 'atm_lokasi.id_atm_lokasi = kunjungan_attach.id_atm_lokasi')
+            ->where('id_kunjungan_attach', $id)->find();
         $result = [
-            'id_atm_tid' => $isExists[0]['id_atm_tid'],
+            'id_kunjungan_attach' => $isExists[0]['id_kunjungan_attach'],
+            'nama_atm_kunjungan' => $isExists[0]['nama_atm_kunjungan'],
             'nama_atm_lokasi' => $isExists[0]['nama_atm_lokasi'],
-            'noted_atm_tid' => $isExists[0]['noted_atm_tid'],
-            'created_atm_tid' => $isExists[0]['created_atm_tid'],
-            'updated_atm_tid' => $isExists[0]['updated_atm_tid'],
+            'petugas_kunjungan_attach' => $isExists[0]['petugas_kunjungan_attach'],
+            'tgl_kunjungan_attach' => $isExists[0]['tgl_kunjungan_attach'],
+            'status_kunjungan_attach' => $isExists[0]['status_kunjungan_attach'],
+            'noted_kunjungan_attach' => $isExists[0]['noted_kunjungan_attach'],
+            'created_kunjungan_attach' => $isExists[0]['created_kunjungan_attach'],
+            'updated_kunjungan_attach' => $isExists[0]['updated_kunjungan_attach'],
         ];
         if ($update) {
             $response = [
@@ -145,7 +181,7 @@ class AtmTid extends BaseController
 
     public function delete($id = null)
     {
-        $data = $this->model->where('id_atm_tid', $id)->findAll();
+        $data = $this->model->where('id_kunjungan_attach', $id)->findAll();
         if ($data) {
             $this->model->delete($id);
             $response = [

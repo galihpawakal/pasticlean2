@@ -35,7 +35,9 @@ class Client extends Migration
             'noted_client' => [
                 'type' => 'text',
             ],
-            'created_client datetime default current_timestamp',
+            'created_client' => [
+                'type' => 'datetime',
+            ],
             'updated_client' => [
                 'type' => 'datetime',
             ],
